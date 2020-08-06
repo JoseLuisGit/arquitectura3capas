@@ -1,15 +1,22 @@
 <?php
 
 
-include_once "../negocio/NRecurso.php";
-$nRecurso = new NRecurso();
-$option = $_POST['medida'];
+include_once "../negocio/NMaquina.php";
+$nMaquina = new NMaquina();
+
 if (!empty($_POST)) {
     if (isset($_POST["agregar"])) {
-        $nRecurso->agregar($_POST["nombre"], $_POST["descripcion"], $_POST["medida"], $_POST["cantidad"]);
+        $nMaquina->agregar($_POST["nombre"], $_POST["descripcion"], $_POST["modelo"], $_POST["capacidad"]);
     }
     if (isset($_POST["modificar"])) {
-        $nRecurso->modificar($_POST["id"], $_POST["nombre"], $_POST["descripcion"], $_POST["medida"], $_POST["cantidad"]);
+        $nMaquina->modificar($_POST["id"], $_POST["nombre"], $_POST["descripcion"], $_POST["modelo"], $_POST["capacidad"]);
+    }
+    if (isset($_POST["habilitar"])) {
+        $nMaquina->habilitar($_POST["id"]);
+    }
+
+    if (isset($_POST["deshabilitar"])) {
+        $nMaquina->deshabilitar($_POST["id"]);
     }
 }
 
@@ -33,7 +40,7 @@ if (!empty($_POST)) {
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
-    <title>Recurso</title>
+    <title>Maquina</title>
 </head>
 
 <body class="sb-nav-fixed">
@@ -55,7 +62,7 @@ if (!empty($_POST)) {
 
             <main>
                 <div class="container-fluid">
-                    <h1 class="mt-4">Recurso</h1>
+                    <h1 class="mt-4">Maquina</h1>
 
 
                     <div class="card mb-4">
@@ -67,74 +74,66 @@ if (!empty($_POST)) {
                                 <h3><?php if (isset($_POST['cargar']))
                                         echo 'Modificar';
                                     else echo 'Agregar';
-                                    ?> Recurso</h3>
+                                    ?> Maquina</h3>
                                 <br>
                                 <!-- Formulario -->
                                 <form method="POST" enctype="multipart/form-data">
-                                    <input type="hidden" name="id" value="<?php if (isset($_POST["cargar"])) echo $_POST["i"]; ?>">
+                                    <input type="hidden" name="id" value="<?php if (isset($_POST["cargar"])) echo $_POST["id"]; ?>">
                                     <div class="form-group row">
                                         <label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
                                         <div class="col-sm-10">
-                                            <input type="text" required class="form-control" id="nombre" name="nombre" placeholder="Nombre" value="<?php if (isset($_POST["cargar"])) echo $_POST["n"]; ?>">
+                                            <input type="text" required class="form-control" id="nombre" name="nombre" placeholder="Nombre" value="<?php if (isset($_POST["cargar"])) echo $_POST["nombre"]; ?>">
                                         </div>
                                     </div>
                                     <div class=" form-group row">
                                         <label for="descripcion" class="col-sm-2 col-form-label">Descripcion</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="descripcion" value="<?php if (isset($_POST["cargar"])) echo $_POST["d"]; ?>"">
+                                            <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="descripcion" value="<?php if (isset($_POST["cargar"])) echo $_POST["descripcion"]; ?>"">
                                             </div>
                                         </div>
 
                                          <div class=" form-group row">
-                                            <label for="medida" class="col-sm-2 col-form-label">Medida</label>
+                                            <label for="modelo" class="col-sm-2 col-form-label">Modelo</label>
                                             <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="modelo" name="modelo" placeholder="modelo" value="<?php if (isset($_POST["cargar"])) echo $_POST["modelo"]; ?>"">
 
 
-                                                <select class="form-control " name="medida" id="medida">
-
-                                                    <option value="m">m</option>
-                                                    <option value="kg">kg</option>
-                                                    <option value="cm">cm</option>
-                                                    <option value="gr">g</option>
-                                                    <option value="l">l</option>
-
-
-                                                </select>
+                                        
                                             </div>
                                         </div>
 
                                         <div class=" form-group row">
-                                            <label for="cantidad" class="col-sm-2 col-form-label">Cantidad</label>
-                                            <div class="col-sm-10">
-                                                <input type="number" step="any" required class="form-control" id="cantidad" name="cantidad" placeholder="cantidad" value="<?php if (isset($_POST["cargar"])) echo $_POST["c"];
-                                                                                                                                                                            else echo '0'; ?>">
+                                                <label for="capacidad" class="col-sm-2 col-form-label">Capacidad</label>
+                                                <div class="col-sm-10">
+                                                    <input type="number" step="any" required class="form-control" id="capacidad" name="capacidad" placeholder="capacidad" value="<?php if (isset($_POST["cargar"])) echo $_POST["capacidad"];
+                                                                                                                                                                                    else echo '0'; ?>">
+                                                </div>
                                             </div>
-                                        </div>
 
 
 
 
 
-                                        <div class=" form-group row ">
+                                            <div class=" form-group row ">
 
-                                            <?php
-                                            if (isset($_POST['cargar'])) {
-                                                echo '
+                                                <?php
+                                                if (isset($_POST['cargar'])) {
+                                                    echo '
                                             <div class=" col-sm-6">
                                             <button type="submit" name="modificar" id="modificar" class="btn btn-primary">Modificar</button>
                                            </div> 
                                                <div class="col-sm-6">
-                                                <a type="button" class="btn btn-info" href="PRecurso.php">Cancelar</a>
+                                                <a type="button" class="btn btn-info" href="PMaquina.php">Cancelar</a>
                                                 </div>';
-                                            } else {
-                                                echo '
+                                                } else {
+                                                    echo '
                                             <div class=" col-sm-6">
                                             <button type="submit" name="agregar" id="agregar" class="btn btn-primary">Agregar</button>
                                            </div> ';
-                                            }
+                                                }
 
-                                            ?>
-                                        </div>
+                                                ?>
+                                            </div>
 
                                 </form>
                             </div>
@@ -146,8 +145,9 @@ if (!empty($_POST)) {
                                         <tr>
                                             <th>Nombre</th>
                                             <th>Descripcion</th>
-                                            <th>Cantidad</th>
-                                            <th>Medida</th>
+                                            <th>Capacidad</th>
+                                            <th>Modelo</th>
+                                            <th>Estado</th>
                                             <th>Opciones</th>
 
                                         </tr>
@@ -156,8 +156,9 @@ if (!empty($_POST)) {
                                         <tr>
                                             <th>Nombre</th>
                                             <th>Descripcion</th>
-                                            <th>Cantidad</th>
-                                            <th>Medida</th>
+                                            <th>Capacidad</th>
+                                            <th>Modelo</th>
+                                            <th>Estado</th>
                                             <th>Opciones</th>
                                         </tr>
                                     </tfoot>
@@ -167,7 +168,7 @@ if (!empty($_POST)) {
                                         <?php
 
 
-                                        $res = $nRecurso->listar();
+                                        $res = $nMaquina->listar();
                                         $html = '';
 
                                         while ($reg = $res->fetch_object()) {
@@ -175,22 +176,35 @@ if (!empty($_POST)) {
                                             <tr >
                                                <td>' . $reg->nombre . '</td>
                                               <td>' . $reg->descripcion . '</td>
-
-                                               <td>' . $reg->cantidad . '</td>
-                                              <td>' . $reg->medida . '</td>
+                                               <td>' . $reg->capacidad . '</td>
+                                              <td>' . $reg->modelo . '</td>
+                                              <td>';
+                                            if ($reg->estado == 1) {
+                                                $html = $html . '<span class="badge badge-success">Activado</span>';
+                                            } else {
+                                                $html = $html . '<span class="badge badge-danger">Desactivado</span>';
+                                            }
+                                            $html = $html . '</td>
                                                <td class="row"> 
                                                <form  method="POST">
-                                                   <input type="hidden" name="i" id="i" value="' . $reg->id . '">
-                                                    <input type="hidden" name="n" id="n" value="' . $reg->nombre . '">
-                                                    <input type="hidden" name="d" id="d" value="' . $reg->descripcion . '">
-                                                      <input type="hidden" name="c" id="n" value="' . $reg->cantidad . '">
-                                                    <input type="hidden" name="medida" id="medida" value="' . $reg->medida . '">
-                                                    <button type="submit" value="cargar" name="cargar" id="cargar" class="btn btn-info" role="button"><i class="fa fa-edit" aria-hidden="true"></i></button>
-                                                 
+                                                   <input type="hidden" name="id" value="' . $reg->id . '">
+                                                    <input type="hidden" name="nombre" value="' . $reg->nombre . '">
+                                                    <input type="hidden" name="descripcion" value="' . $reg->descripcion . '">
+                                                      <input type="hidden" name="capacidad" value="' . $reg->capacidad . '">
+                                                    <input type="hidden" name="modelo" value="' . $reg->modelo . '">
+                                                    <button type="submit" value="cargar" name="cargar"  class="btn btn-info" role="button"><i class="fa fa-edit" aria-hidden="true"></i></button>
+                                                 ';
+                                            if ($reg->estado == 1) {
+                                                $html = $html . '  <button type="submit" value="deshabilitar" name="deshabilitar"  class="btn btn-danger" role="button"><i class="fa fa-minus" aria-hidden="true"></i></button>';
+                                            } else {
+                                                $html = $html . '  <button type="submit" value="habilitar" name="habilitar"  class="btn btn-success" role="button"><i class="fa fa-check" aria-hidden="true"></i></button>';
+                                            }
+
+                                            $html = $html . '
                                                      </form>
                                                   </tr>';
                                         }
-                                        echo $html
+                                        echo $html;
                                         ?>
 
 
