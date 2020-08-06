@@ -14,14 +14,14 @@ class NRol
         return $this->rol->listar();
     }
 
-    public function agregar($nombre, $descripcion)
+    public function agregar(string $nombre, string $descripcion)
     {
         $this->rol->setNombre($nombre);
         $this->rol->setDescripcion($descripcion);
         $this->rol->agregar();
     }
 
-    public function modificar($id, $nombre, $descripcion)
+    public function modificar(int $id, string $nombre, string $descripcion)
     {
         $this->rol->setId($id);
         $this->rol->setNombre($nombre);
@@ -29,7 +29,7 @@ class NRol
         $this->rol->modificar();
     }
 
-    public function eliminar($id)
+    public function eliminar(int $id)
     {
         $this->rol->setId($id);
         $this->rol->eliminar();

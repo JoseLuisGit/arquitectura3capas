@@ -7,8 +7,8 @@ class DRecurso
     private int $id;
     private string $nombre;
     private string $descripcion;
-    private float $medida;
-    private int $cantidad;
+    private string $medida;
+    private float $cantidad;
 
     public $conexion;
 
@@ -78,13 +78,13 @@ class DRecurso
     {
 
         $sql = "INSERT INTO recurso (nombre,descripcion,medida,cantidad)
-     	VALUES (" . $this->getNombre() . "," . $this->getDescripcion() . "," . $this->getMedida() . "," . $this->getCantidad() . ")";
+     	VALUES ('" . $this->getNombre() . "','" . $this->getDescripcion() . "','" . $this->getMedida() . "','" . $this->getCantidad() . "')";
         $this->conexion->consulta($sql);
     }
 
     public function modificar()
     {
-        $sql = "UPDATE recurso SET  nombre= '" . $this->getNombre() . "', descripcion='" . $this->getDescripcion() .  "', medida='" . $this->getMedida() . "' , cantidad='" . $this->getCantidad . "' WHERE id='" . $this->getId() . "' ";
+        $sql = "UPDATE recurso SET  nombre= '" . $this->getNombre() . "', descripcion='" . $this->getDescripcion() .  "', medida='" . $this->getMedida() . "' , cantidad='" . $this->getCantidad() . "' WHERE id='" . $this->getId() . "' ";
         $this->conexion->consulta($sql);
     }
 }

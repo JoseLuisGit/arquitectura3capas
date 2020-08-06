@@ -30,7 +30,7 @@ class DRol
         $this->descripcion = $descripcion;
     }
 
-    public function getId()
+    public function  getId()
     {
         return $this->id;
     }

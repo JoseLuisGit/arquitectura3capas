@@ -14,14 +14,14 @@ class NServicio
         return $this->servicio->listar();
     }
 
-    public function agregar($nombre, $descripcion)
+    public function agregar(string $nombre, string $descripcion)
     {
         $this->servicio->setNombre($nombre);
         $this->servicio->setDescripcion($descripcion);
         $this->servicio->agregar();
     }
 
-    public function modificar($id, $nombre, $descripcion)
+    public function modificar(int $id, string $nombre, string $descripcion)
     {
         $this->servicio->setId($id);
         $this->servicio->setNombre($nombre);

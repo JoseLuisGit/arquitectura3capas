@@ -27,7 +27,7 @@
                 </a>
                 <div class="collapse" id="collapseB" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="#">Diseño</a>
+                        <a class="nav-link" href="PRecurso.php">Recurso</a>
                         <a class="nav-link" href="PServicio.php">Servicio</a>
                     </nav>
                 </div>
