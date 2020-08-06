@@ -8,24 +8,11 @@ if (!empty($_POST)) {
         $nRol->agregar($_POST["nombre"], $_POST["descripcion"]);
     }
     if (isset($_POST["modificar"])) {
-        //modificar
+        $nRol->modificar($_POST["id"], $_POST["nombre"], $_POST["descripcion"],);
     }
-    // if (isset($_POST["cargar"])) {
-    //   $nGol->cargar($_POST["id"]);
-    // }
-    // if (isset($_POST["eliminar"] ) )
-    // {
-    //     $objetoNegocio->eliminar();
-    // }
-    // if (isset($_POST["actualizar"] ) )
-    // {
-    //     $objetoNegocio->actualizar();
-    // }
-    // if (isset($_POST["consultar"] ) )
-    // {
-    //     $objetoNegocio->listar();
-
-    // }
+    if (isset($_POST["eliminar"])) {
+        $nRol->eliminar($_POST["i"]);
+    }
 }
 
 ?>
@@ -85,7 +72,7 @@ if (!empty($_POST)) {
                                     ?> Rol</h3>
                                 <br>
                                 <!-- Formulario -->
-                                <form action="PRol.php" method="POST" enctype="multipart/form-data">
+                                <form method="POST" enctype="multipart/form-data">
                                     <input type="hidden" name="id" value="<?php if (isset($_POST["cargar"])) echo $_POST["i"]; ?>">
                                     <div class="form-group row">
                                         <label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
@@ -161,12 +148,12 @@ if (!empty($_POST)) {
                                                <td>' . $reg->nombre . '</td>
                                               <td>' . $reg->descripcion . '</td>
                                                <td class="row"> 
-                                               <form action="PRol.php" method="POST"">
+                                               <form  method="POST">
                                                    <input type="hidden" name="i" id="i" value="' . $reg->id . '">
                                                     <input type="hidden" name="n" id="n" value="' . $reg->nombre . '">
                                                     <input type="hidden" name="d" id="d" value="' . $reg->descripcion . '">
                                                     <button type="submit" value="cargar" name="cargar" id="cargar" class="btn btn-info" role="button"><i class="fa fa-edit" aria-hidden="true"></i></button>
-                                                    <button type="submit" value="cargar" name="cargar" id="cargar" class="btn btn-danger" role="button"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                                                    <button type="submit" value="eliminar" name="eliminar" id="eliminar" class="btn btn-danger" role="button"><i class="fa fa-minus" aria-hidden="true"></i></button>
                                                      </form>
                                                   </tr>';
                                                         }

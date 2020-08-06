@@ -16,7 +16,7 @@
                 <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link" href="#">Usuario</a>
-                        <a class="nav-link" href="#">Rol</a>
+                        <a class="nav-link" href="PRol.php">Rol</a>
                     </nav>
                 </div>
 

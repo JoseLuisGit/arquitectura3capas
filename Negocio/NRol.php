@@ -21,23 +21,17 @@ class NRol
         $this->rol->agregar();
     }
 
+    public function modificar($id, $nombre, $descripcion)
+    {
+        $this->rol->setId($id);
+        $this->rol->setNombre($nombre);
+        $this->rol->setDescripcion($descripcion);
+        $this->rol->modificar();
+    }
 
-
-
-
-    // function eliminar($id){
-    //     $rol->setId($id);
-    //     $rol->eliminar();
-    // }
-
-    // function modificar($id,$nombre,$descripcion){
-    //     $rol->setId($id);
-    //     $rol->setNombre($nombre);
-    //     $rol->setDescripcion($descripcion);
-
-    //    $rol->modificar();
-
-
-
-    // }
+    public function eliminar($id)
+    {
+        $this->rol->setId($id);
+        $this->rol->eliminar();
+    }
 }

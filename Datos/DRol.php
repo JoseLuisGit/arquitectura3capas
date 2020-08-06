@@ -43,8 +43,21 @@ class DRol
 
         $sql = "INSERT INTO rol (nombre,descripcion)
      	VALUES ('$this->nombre','$this->descripcion')";
+        $this->conexion->consulta($sql);
+    }
+
+    public function modificar()
+    {
+        $sql = "UPDATE rol SET  nombre= '" . $this->nombre . "', descripcion='" . $this->descripcion . "' WHERE id='" . $this->id . "' ";
+        $this->conexion->consulta($sql);
+    }
+
+    public function eliminar()
+    {
+        $sql = "DELETE FROM rol WHERE id='" . $this->id . "' ";
         return $this->conexion->consulta($sql);
     }
+}
 
 
     // public function eliminar()
@@ -52,10 +65,3 @@ class DRol
     //   $sql = "DELETE FROM rol WHERE id='" . $this->id . "' ";
     //   return consulta($sql);
     // }
-
-    // public function modificar()
-    // {
-    //   $sql = "UPDATE rol SET  nombre= '" . $this->nombre . "', descripcion='" . $this->descripcion . "' WHERE id='" . $this->id . "' ";
-    //   return consulta($sql);
-    // }
-}
