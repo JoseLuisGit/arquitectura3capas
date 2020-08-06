@@ -2,13 +2,15 @@
 
 include_once "Conexion.php";
 
-class DRol
+class DRecurso
 {
     private int $id;
     private string $nombre;
     private string $descripcion;
+    private float $medida;
+    private int $cantidad;
 
-    private $conexion;
+    public $conexion;
 
     public function __construct()
     {
@@ -30,6 +32,16 @@ class DRol
         $this->descripcion = $descripcion;
     }
 
+    public function setMedida($medida)
+    {
+        $this->medida = $medida;
+    }
+
+    public function setCantidad($cantidad)
+    {
+        $this->cantidad = $cantidad;
+    }
+
     public function getId()
     {
         return $this->id;
@@ -43,11 +55,21 @@ class DRol
         return $this->descripcion;
     }
 
+    public function getMedida()
+    {
+        return $this->medida;
+    }
+    public function getCantidad()
+    {
+        return $this->cantidad;
+    }
+
+
 
 
     public function listar()
     {
-        $sql = "SELECT * FROM rol";
+        $sql = "SELECT * FROM recurso";
 
         return $this->conexion->consulta($sql);
     }
@@ -55,20 +77,14 @@ class DRol
     public function agregar()
     {
 
-        $sql = "INSERT INTO rol (nombre,descripcion)
-     	VALUES ('" . $this->getNombre() . "','" . $this->getDescripcion() . "')";
+        $sql = "INSERT INTO recurso (nombre,descripcion,medida,cantidad)
+     	VALUES (" . $this->getNombre() . "," . $this->getDescripcion() . "," . $this->getMedida() . "," . $this->getCantidad() . ")";
         $this->conexion->consulta($sql);
     }
 
     public function modificar()
     {
-        $sql = "UPDATE rol SET  nombre= '" . $this->getNombre() . "', descripcion='" . $this->getDescripcion() . "' WHERE id='" . $this->getId() . "' ";
+        $sql = "UPDATE recurso SET  nombre= '" . $this->getNombre() . "', descripcion='" . $this->getDescripcion() .  "', medida='" . $this->getMedida() . "' , cantidad='" . $this->getCantidad . "' WHERE id='" . $this->getId() . "' ";
         $this->conexion->consulta($sql);
-    }
-
-    public function eliminar()
-    {
-        $sql = "DELETE FROM rol WHERE id='" . $this->getId() . "' ";
-        return $this->conexion->consulta($sql);
     }
 }

@@ -4,11 +4,11 @@ include_once "Conexion.php";
 
 class DServicio
 {
-    public $id;
-    public $nombre;
-    public $descripcion;
+    private int $id;
+    private string $nombre;
+    private string $descripcion;
 
-    public $conexion;
+    private $conexion;
 
     public function __construct()
     {
@@ -30,6 +30,21 @@ class DServicio
         $this->descripcion = $descripcion;
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+    public function getDescripcion()
+    {
+        return $this->descripcion;
+    }
+
+
+
 
     public function listar()
     {
@@ -42,13 +57,13 @@ class DServicio
     {
 
         $sql = "INSERT INTO servicio (nombre,descripcion)
-     	VALUES ('$this->nombre','$this->descripcion')";
+     	VALUES ('" . $this->getNombre() . "','" . $this->getDescripcion() . "')";
         $this->conexion->consulta($sql);
     }
 
     public function modificar()
     {
-        $sql = "UPDATE servicio SET  nombre= '" . $this->nombre . "', descripcion='" . $this->descripcion . "' WHERE id='" . $this->id . "' ";
+        $sql = "UPDATE servicio SET  nombre= '" . $this->getNombre() . "', descripcion='" . $this->getDescripcion() . "' WHERE id='" . $this->getId() . "' ";
         $this->conexion->consulta($sql);
     }
 }
