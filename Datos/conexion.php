@@ -23,4 +23,9 @@ class Conexion
         $query = $this->conexion->query($sql);
         return $query;
     }
+    function consultaId($sql)
+    {
+        $query = $this->conexion->query($sql);
+        return $this->conexion->insert_id;
+    }
 }

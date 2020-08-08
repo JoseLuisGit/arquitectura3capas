@@ -153,7 +153,7 @@ if (!empty($_POST)) {
                                                     <input type="hidden" name="n" id="n" value="' . $reg->nombre . '">
                                                     <input type="hidden" name="d" id="d" value="' . $reg->descripcion . '">
                                                     <button type="submit" value="cargar" name="cargar" id="cargar" class="btn btn-info" role="button"><i class="fa fa-edit" aria-hidden="true"></i></button>
-                                                    <button type="submit" value="eliminar" name="eliminar" id="eliminar" class="btn btn-danger" role="button"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                                                    <button type="submit" value="eliminar" name="eliminar" id="eliminar" class="btn btn-danger" role="button"><i class="fa fa-eraser" aria-hidden="true"></i></button>
                                                      </form>
                                                   </tr>';
                                                         }
@@ -189,9 +189,8 @@ if (!empty($_POST)) {
 
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js" charset="utf-8"></script>
 
-    {{-- </script> --}}
+
 </body>
 
 </html>

@@ -3,7 +3,7 @@
 
 include_once "../negocio/NRecurso.php";
 $nRecurso = new NRecurso();
-$option = $_POST['medida'];
+
 if (!empty($_POST)) {
     if (isset($_POST["agregar"])) {
         $nRecurso->agregar($_POST["nombre"], $_POST["descripcion"], $_POST["medida"], $_POST["cantidad"]);
@@ -92,11 +92,11 @@ if (!empty($_POST)) {
 
                                                 <select class="form-control " name="medida" id="medida">
 
-                                                    <option value="m">m</option>
-                                                    <option value="kg">kg</option>
-                                                    <option value="cm">cm</option>
-                                                    <option value="gr">g</option>
-                                                    <option value="l">l</option>
+                                                    <option value="m" <?php if (isset($_POST["cargar"]) && $_POST["medida"] == "m") echo "selected" ?>>Metro</option>
+                                                    <option value="kg" <?php if (isset($_POST["cargar"]) && $_POST["medida"] == "kg") echo "selected" ?>>Kilogramo</option>
+                                                    <option value="cm" <?php if (isset($_POST["cargar"]) && $_POST["medida"] == "cm") echo "selected" ?>>Centimetro</option>
+                                                    <option value="gr" <?php if (isset($_POST["cargar"]) && $_POST["medida"] == "gr") echo "selected" ?>>Gramo</option>
+                                                    <option value="l" <?php if (isset($_POST["cargar"]) && $_POST["medida"] == "l") echo "selected" ?>>Litro</option>
 
 
                                                 </select>
@@ -222,9 +222,7 @@ if (!empty($_POST)) {
 
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js" charset="utf-8"></script>
 
-    {{-- </script> --}}
 </body>
 
 </html>
