@@ -30,7 +30,7 @@
                         <a class="nav-link" href="PRecurso.php">Recurso</a>
                         <a class="nav-link" href="PServicio.php">Servicio</a>
                         <a class="nav-link" href="PMaquina.php">Maquina</a>
-
+                        <a class="nav-link" href="PTecnico.php">Tecnico</a>
                     </nav>
                 </div>
 
