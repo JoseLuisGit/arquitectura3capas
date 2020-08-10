@@ -33,6 +33,7 @@
                         <a class="nav-link" href="PTecnico.php">Tecnico</a>
                         <a class="nav-link" href="PProveedor.php">Proveedor</a>
                         <a class="nav-link" href="PIngreso.php">Ingreso</a>
+                        <a class="nav-link" href="PPedido.php">Pedido</a>
 
                     </nav>
                 </div>
