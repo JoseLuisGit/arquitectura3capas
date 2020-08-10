@@ -1,0 +1,302 @@
+<?php
+
+session_start();
+include_once "../negocio/NIngreso.php";
+include_once "../Negocio/NProveedor.php";
+include_once "../Negocio/NRecurso.php";
+
+$nIngreso = new NIngreso();
+$nProveedor = new NProveedor();
+$nRecurso = new NRecurso();
+$recursos = $nRecurso->listar();
+
+$detalle = array();
+
+if (!empty($_POST)) {
+    if (isset($_POST["agregar"])) {
+        $nIngreso->agregar($_POST["fecha"], $_POST["idproveedor"], $_POST["total"], $_SESSION["detalle"]);
+        $_SESSION["detalle"] = [];
+    }
+    if (isset($_POST["agregardetalle"])) {
+
+        if ($_POST["idrecurso"] != "") {
+            $b = false;
+            while ($det = $recursos->fetch_object()) {
+                if ($det->id == $_POST["idrecurso"]) {
+                    $_SESSION["detalle"][] = $det;
+                    $b = true;
+                }
+            }
+            if ($b) {
+                $detalle = $_SESSION["detalle"];
+                $detalle[count($detalle) - 1]->cantidad = $_POST["cantidad"];
+                $detalle[count($detalle) - 1]->costo = $_POST["costo"];
+            }
+        } else {
+            if (isset($_SESSION["detalle"]))
+                $detalle = $_SESSION["detalle"];
+        }
+    }
+    if (isset($_POST["limpiar"])) {
+        $_SESSION["detalle"] = [];
+    }
+}
+
+
+
+
+
+
+
+?>
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <link href="assets/css/styles.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
+    <title>Ingreso</title>
+</head>
+
+<body class="sb-nav-fixed">
+
+    <!-- heaader -->
+    <?php
+    include 'layouts/header.php'
+    ?>
+    <div id="layoutSidenav">
+        <!-- sidebar -->
+        <?php
+        include 'layouts/sidebar.php';
+        ?>
+
+        <div id="layoutSidenav_content">
+
+            <!-- CONTENIDO -->
+
+
+            <main>
+                <div class="container-fluid">
+                    <h1 class="mt-4">Ingreso</h1>
+
+
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table mr-1"></i>
+
+                            <div class="container ">
+
+                                <h3><?php if (isset($_POST['listardetalle']))
+                                        echo 'Listado';
+                                    else echo 'Agregar';
+                                    ?> Ingreso</h3>
+                                <br>
+                                <!-- Formulario -->
+                                <form method="POST" enctype="multipart/form-data">
+
+                                    <div class="form-group row">
+                                        <label for="nombre" class="col-sm-2 col-form-label">Fecha</label>
+                                        <div class="col-sm-10">
+                                            <input type="date" required class="form-control" id="fecha" name="fecha" value="<?php if (isset($_POST["fecha"])) echo $_POST["fecha"] ?>">
+                                        </div>
+                                    </div>
+                                    <div class=" form-group row">
+                                        <label for="genero" class="col-sm-2 col-form-label">Proveedor</label>
+                                        <div class="col-sm-10">
+                                            <select name="idproveedor" class="form-control" id="idproveedor">
+                                                <?php
+                                                $res = $nProveedor->listar();
+                                                $html = '';
+                                                while ($reg = $res->fetch_object()) {
+                                                    $html = $html . ' <option value="' . $reg->id . '"';
+
+                                                    if (isset($_POST["agregardetalle"])) {
+                                                        if ($_POST["idproveedor"] == $reg->id) {
+                                                            $html = $html . 'selected';
+                                                        }
+                                                    }
+
+                                                    $html = $html . ' >' . $reg->nombre . ' ' . $reg->apellido . '</option>';
+                                                }
+                                                echo $html;
+                                                ?>
+
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <h3>Detalle Recurso</h3>
+
+
+                                    <div class="form-group row">
+
+                                        <label for="nombre" class="col-sm-2 col-form-label"># Recurso</label>
+                                        <div class="col-sm-2">
+                                            <input type="number" name="idrecurso" class="form-control" id="idrecurso" placeholder="Numero Recurso">
+                                        </div>
+                                        <label for="nombre" class="col-sm-2 col-form-label"> Cantidad</label>
+                                        <div class="col-sm-2">
+                                            <input type="number" name="cantidad" class="form-control" id="cantidad" placeholder="Cantidad">
+                                        </div>
+                                        <label for="nombre" class="col-sm-2 col-form-label"> Costo</label>
+                                        <div class="col-sm-2">
+                                            <input type="number" name="costo" class="form-control" id="costo" placeholder="Costo">
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary" name="agregardetalle">Agregar Detalle</button>
+                                        <button type="submit" class="btn btn-danger" name="limpiar">Limpiar</button>
+
+
+                                    </div>
+
+
+
+                                    <table class="table table-dark table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Descripcion</th>
+                                                <th>Cantidad</th>
+                                                <th>Costo</th>
+                                                <th>Subtotal</th>
+
+                                            </tr>
+                                        </thead>
+                                        <?php
+                                        $total = 0;
+                                        foreach ($detalle as $det) {
+                                            echo '<tr><td>' . $det->nombre . '</td>
+                                            <td>' . $det->descripcion . '</td>
+                                            <td>' . $det->cantidad . '</td>
+                                            <td>' . $det->costo . '</td>
+                                            <td>' . $det->costo * $det->cantidad . '</td>
+                                            </tr>
+                                            ';
+                                            $total = $total + $det->costo * $det->cantidad;
+                                        }
+                                        ?>
+
+
+                                    </table>
+                                    <div class=" form-group row">
+
+                                        <h3>Total <?php echo $total; ?> Bs.</h3>
+
+                                        <div class="col-sm-10">
+                                            <input type="hidden" class="form-control" id="total" name="total" value="<?php echo $total; ?>">
+                                        </div>
+                                    </div>
+
+                                    <div class=" col-sm-6">
+                                        <button type="submit" name="agregar" id="agregar" class="btn btn-primary">Agregar</button>
+                                    </div>
+
+
+
+
+
+                                </form>
+                            </div>
+                        </div>
+                        <div class=" card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Fecha</th>
+                                            <th>Total</th>
+                                            <th>Proveedor</th>
+                                            <th>Opciones</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Fecha</th>
+                                            <th>Total</th>
+                                            <th>Proveedor</th>
+                                            <th>Opciones</th>
+
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+
+
+                                        <?php
+
+
+                                        $res = $nIngreso->listar();
+                                        $html = '';
+
+                                        while ($reg = $res->fetch_object()) {
+                                            $html = $html . '
+                                            <tr >
+                                                 <td>' . $reg->id . '</td>
+                                               <td>' . $reg->fecha . '</td>
+                                              <td>' . $reg->total . '</td>
+                                               <td>' . $reg->idProveedor . '</td>
+                                              ';
+
+                                            $html = $html . '</td>
+                                               <td class="row"> 
+                                               <form  method="POST">
+                                                   <input type="hidden" name="id" value="' . $reg->id . '">
+                                                    <input type="hidden" name="fecha" value="' . $reg->fecha . '">
+                                                    <input type="hidden" name="total" value="' . $reg->total . '">
+                                                      <input type="hidden" name="idproveedor" value="' . $reg->idProveedor . '">
+                                                    <button type="submit" value="listardetalle" name="listardetalle"  class="btn btn-info" role="button"><i class="fa fa-eye" aria-hidden="true"></i></button>
+                                                     </form>
+                                                  </tr>';
+                                        }
+                                        echo $html;
+                                        ?>
+
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- footer -->
+
+            <?php
+            include 'layouts/footer.php'
+            ?>
+
+
+        </div>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="assets/js/scripts.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
