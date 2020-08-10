@@ -99,10 +99,7 @@ if (!empty($_POST)) {
 
                             <div class="container ">
 
-                                <h3><?php if (isset($_POST['listardetalle']))
-                                        echo 'Listado';
-                                    else echo 'Agregar';
-                                    ?> Ingreso</h3>
+                                <h3>Agregar Ingreso</h3>
                                 <br>
                                 <!-- Formulario -->
                                 <form method="POST" enctype="multipart/form-data">
@@ -169,6 +166,7 @@ if (!empty($_POST)) {
                                     <table class="table table-dark table-bordered">
                                         <thead>
                                             <tr>
+                                                <th>#</th>
                                                 <th>Nombre</th>
                                                 <th>Descripcion</th>
                                                 <th>Cantidad</th>
@@ -180,7 +178,8 @@ if (!empty($_POST)) {
                                         <?php
                                         $total = 0;
                                         foreach ($detalle as $det) {
-                                            echo '<tr><td>' . $det->nombre . '</td>
+                                            echo '<tr><td>' . $det->id . '</td>
+                                            <td>' . $det->nombre . '</td>
                                             <td>' . $det->descripcion . '</td>
                                             <td>' . $det->cantidad . '</td>
                                             <td>' . $det->costo . '</td>
@@ -274,6 +273,62 @@ if (!empty($_POST)) {
                                 </table>
                             </div>
                         </div>
+
+                        <?php
+
+                        if (isset($_POST["listardetalle"])) {
+                            $id = $_POST["id"];
+                            $listadodetalle = $nIngreso->listardetalle($id);
+                            $html = ' <div class=" card-body">
+                            <div class="table-responsive">
+                                <h3>Detalle Ingreso</h3>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                          
+                                            <th scope="col">Recurso</th>
+                                            <th scope="col">Cantidad</th>
+                                            <th scope="col">Costo</th>
+                                            <th scope="col">SubTotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>';
+                            while ($reg = $listadodetalle->fetch_object()) {
+                                $html = $html . '
+                                <th scope="row">' . $reg->idingreso . '</th>
+                                
+                                <td>' . $reg->idrecurso . '</td>
+                                <td>' . $reg->cantidad . '</td>
+                                <td>' . $reg->costo . '</td>
+                                <td>' . $reg->costo * $reg->cantidad . ' Bs</td>
+                                
+                                </tr>';
+                            }
+
+                            $html = $html . '
+
+
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                                ';
+
+                            echo $html;
+                        }
+
+
+
+
+                        ?>
+
+
+
+
+
                     </div>
                 </div>
             </main>

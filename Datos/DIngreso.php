@@ -71,7 +71,7 @@ class DIngreso
 
     public function listardetalle($id)
     {
-        $sql = "SELECT * FROM detalle_ingreso WHERE idingreso= $id";
+        $sql = "SELECT * FROM detalle_ingreso INNER JOIN ingreso ON detalle_ingreso.idingreso = ingreso.id WHERE idingreso= $id";
 
         return $this->conexion->consulta($sql);
     }
