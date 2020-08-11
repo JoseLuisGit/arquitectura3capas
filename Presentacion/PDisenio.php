@@ -10,6 +10,10 @@ if (isset($_POST["idpedido"])) {
     header("Location: PPedido.php");
 }
 
+$id = isset($_POST["id"]) ? $_POST["id"] : "";
+$imagen = isset($_POST["imagen"]) ? $_POST["imagen"] : "";
+
+
 
 if (!empty($_POST)) {
     if (isset($_POST["agregar"])) {
@@ -25,10 +29,10 @@ if (!empty($_POST)) {
     }
 
     if (isset($_POST["eliminar"])) {
-        if (file_exists('./assets/img/' . $_POST["imagen"])) {
-            unlink('./assets/img/' . $_POST["imagen"]);
+        if (file_exists('./assets/img/' . $imagen)) {
+            unlink('./assets/img/' . $imagen);
         }
-        $nDisenio->eliminar($_POST["id"]);
+        $nDisenio->eliminar($id);
     }
 }
 

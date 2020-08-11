@@ -8,18 +8,29 @@ include_once "../Negocio/NRecurso.php";
 $nIngreso = new NIngreso();
 $nProveedor = new NProveedor();
 $nRecurso = new NRecurso();
+
 $recursos = $nRecurso->listar();
+
+
 
 $detalle = array();
 
+$id = isset($_POST["id"]) ? $_POST["id"] : "";
+$fecha = isset($_POST["fecha"]) ? $_POST["fecha"] : "";
+$idproveedor = isset($_POST["idproveedor"]) ? $_POST["idproveedor"] : "";
+$total = isset($_POST["total"]) ? $_POST["total"] : "";
+$idrecurso = isset($_POST["idrecurso"]) ? $_POST["idrecurso"] : "";
+
+
+
 if (!empty($_POST)) {
     if (isset($_POST["agregar"])) {
-        $nIngreso->agregar($_POST["fecha"], $_POST["idproveedor"], $_POST["total"], $_SESSION["detalle"]);
+        $nIngreso->agregar($fecha, $idproveedor, $total, $_SESSION["detalle"]);
         $_SESSION["detalle"] = [];
     }
     if (isset($_POST["agregardetalle"])) {
 
-        if ($_POST["idrecurso"] != "") {
+        if ($idrecurso != "") {
             $b = false;
             while ($det = $recursos->fetch_object()) {
                 if ($det->id == $_POST["idrecurso"]) {
@@ -121,7 +132,7 @@ if (!empty($_POST)) {
                                                     $html = $html . ' <option value="' . $reg->id . '"';
 
                                                     if (isset($_POST["agregardetalle"])) {
-                                                        if ($_POST["idproveedor"] == $reg->id) {
+                                                        if ($idproveedor == $reg->id) {
                                                             $html = $html . 'selected';
                                                         }
                                                     }
@@ -277,7 +288,7 @@ if (!empty($_POST)) {
                         <?php
 
                         if (isset($_POST["listardetalle"])) {
-                            $id = $_POST["id"];
+
                             $listadodetalle = $nIngreso->listardetalle($id);
                             $html = ' <div class=" card-body">
                             <div class="table-responsive">

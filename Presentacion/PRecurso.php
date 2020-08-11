@@ -4,12 +4,17 @@
 include_once "../negocio/NRecurso.php";
 $nRecurso = new NRecurso();
 
+$id = isset($_POST["id"]) ? $_POST["id"] : "";
+$nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : "";
+$descripcion = isset($_POST["descripcion"]) ? $_POST["descripcion"] : "";
+$medida = isset($_POST["medida"]) ? $_POST["medida"] : "";
+$cantidad = isset($_POST["cantidad"]) ? $_POST["cantidad"] : "";
 if (!empty($_POST)) {
     if (isset($_POST["agregar"])) {
-        $nRecurso->agregar($_POST["nombre"], $_POST["descripcion"], $_POST["medida"], $_POST["cantidad"]);
+        $nRecurso->agregar($nombre, $descripcion, $medida, $cantidad);
     }
     if (isset($_POST["modificar"])) {
-        $nRecurso->modificar($_POST["id"], $_POST["nombre"], $_POST["descripcion"], $_POST["medida"], $_POST["cantidad"]);
+        $nRecurso->modificar($id, $nombre, $descripcion, $medida, $cantidad);
     }
 }
 

@@ -3,12 +3,17 @@
 
 include_once "../negocio/NRol.php";
 $nRol = new NRol();
+
+$id = isset($_POST["id"]) ? $_POST["id"] : "";
+$nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : "";
+$descripcion = isset($_POST["descripcion"]) ? $_POST["descripcion"] : "";
+
 if (!empty($_POST)) {
     if (isset($_POST["agregar"])) {
-        $nRol->agregar($_POST["nombre"], $_POST["descripcion"]);
+        $nRol->agregar($nombre, $descripcion);
     }
     if (isset($_POST["modificar"])) {
-        $nRol->modificar($_POST["id"], $_POST["nombre"], $_POST["descripcion"],);
+        $nRol->modificar($id, $nombre, $descripcion,);
     }
 }
 

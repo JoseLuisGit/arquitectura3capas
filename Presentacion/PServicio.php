@@ -3,12 +3,15 @@
 
 include_once "../negocio/NServicio.php";
 $nServicio = new NServicio();
+$id = isset($_POST["id"]) ? $_POST["id"] : "";
+$nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : "";
+$descripcion = isset($_POST["descripcion"]) ? $_POST["descripcion"] : "";
 if (!empty($_POST)) {
     if (isset($_POST["agregar"])) {
-        $nServicio->agregar($_POST["nombre"], $_POST["descripcion"]);
+        $nServicio->agregar($nombre, $descripcion);
     }
     if (isset($_POST["modificar"])) {
-        $nServicio->modificar($_POST["id"], $_POST["nombre"], $_POST["descripcion"],);
+        $nServicio->modificar($id, $nombre, $descripcion);
     }
 }
 

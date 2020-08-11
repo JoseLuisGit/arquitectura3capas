@@ -4,19 +4,25 @@
 include_once "../negocio/NMaquina.php";
 $nMaquina = new NMaquina();
 
+$id = isset($_POST["id"]) ? $_POST["id"] : "";
+$nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : "";
+$descripcion = isset($_POST["descripcion"]) ? $_POST["descripcion"] : "";
+$modelo = isset($_POST["modelo"]) ? $_POST["modelo"] : "";
+$capacidad = isset($_POST["capacidad"]) ? $_POST["capacidad"] : "";
+
 if (!empty($_POST)) {
     if (isset($_POST["agregar"])) {
-        $nMaquina->agregar($_POST["nombre"], $_POST["descripcion"], $_POST["modelo"], $_POST["capacidad"]);
+        $nMaquina->agregar($nombre, $descripcion, $modelo, $capacidad);
     }
     if (isset($_POST["modificar"])) {
-        $nMaquina->modificar($_POST["id"], $_POST["nombre"], $_POST["descripcion"], $_POST["modelo"], $_POST["capacidad"]);
+        $nMaquina->modificar($id, $nombre, $descripcion, $modelo, $capacidad);
     }
     if (isset($_POST["habilitar"])) {
-        $nMaquina->habilitar($_POST["id"]);
+        $nMaquina->habilitar($id);
     }
 
     if (isset($_POST["deshabilitar"])) {
-        $nMaquina->deshabilitar($_POST["id"]);
+        $nMaquina->deshabilitar($id);
     }
 }
 

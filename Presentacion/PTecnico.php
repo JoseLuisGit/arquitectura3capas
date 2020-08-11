@@ -5,13 +5,22 @@ include_once "../negocio/NTecnico.php";
 include_once "../negocio/NRol.php";
 
 $nTecnico = new NTecnico();
+$id = isset($_POST["id"]) ? $_POST["id"] : "";
+$nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : "";
+$apellido = isset($_POST["apellido"]) ? $_POST["apellido"] : "";
+$genero = isset($_POST["genero"]) ? $_POST["genero"] : "Masculino";
+$telefono = isset($_POST["telefono"]) ? $_POST["telefono"] : "";
+$direccion = isset($_POST["direccion"]) ? $_POST["direccion"] : "";
+$email = isset($_POST["email"]) ? $_POST["email"] : "";
+$informacion = isset($_POST["informacion"]) ? $_POST["informacion"] : "";
+
 
 if (!empty($_POST)) {
     if (isset($_POST["agregar"])) {
-        $nTecnico->agregar($_POST["nombre"], $_POST["apellido"], $_POST["genero"], $_POST["telefono"], $_POST["direccion"], $_POST["email"], $_POST["informacion"]);
+        $nTecnico->agregar($nombre, $apellido, $genero, $telefono, $direccion, $email, $informacion);
     }
     if (isset($_POST["modificar"])) {
-        $nTecnico->modificar($_POST["id"], $_POST["nombre"], $_POST["apellido"], $_POST["genero"], $_POST["telefono"], $_POST["direccion"], $_POST["email"], $_POST["informacion"]);
+        $nTecnico->modificar($id, $nombre, $apellido, $genero, $telefono, $direccion, $email, $informacion);
     }
 }
 
@@ -89,14 +98,7 @@ if (!empty($_POST)) {
                                             </div>
                                         </div>
 
-                                        <?php
-                                        if (isset($_POST["cargar"])) {
-                                            $genero = $_POST["genero"];
-                                        } else {
-                                            $genero = "Masculino";
-                                        }
-                                        ?>
-
+                                      
                                          <div class=" form-group row">
                                             <label for="genero" class="col-sm-2 col-form-label">Genero</label>
                                             <div class="col-sm-10">

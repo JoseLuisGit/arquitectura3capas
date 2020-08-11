@@ -6,12 +6,21 @@ include_once "../negocio/NRol.php";
 
 $nProveedor = new NProveedor();
 
+$id = isset($_POST["id"]) ? $_POST["id"] : "";
+$nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : "";
+$apellido = isset($_POST["apellido"]) ? $_POST["apellido"] : "";
+$genero = isset($_POST["genero"]) ? $_POST["genero"] : "Masculino";
+$telefono = isset($_POST["telefono"]) ? $_POST["telefono"] : "";
+$direccion = isset($_POST["direccion"]) ? $_POST["direccion"] : "";
+$email = isset($_POST["email"]) ? $_POST["email"] : "";
+$empresa = isset($_POST["empresa"]) ? $_POST["empresa"] : "";
+$telefonoempresa = isset($_POST["telefonoempresa"]) ? $_POST["telefonoempresa"] : "";
 if (!empty($_POST)) {
     if (isset($_POST["agregar"])) {
-        $nProveedor->agregar($_POST["nombre"], $_POST["apellido"], $_POST["genero"], $_POST["telefono"], $_POST["direccion"], $_POST["email"], $_POST["empresa"], $_POST["telefonoempresa"]);
+        $nProveedor->agregar($nombre, $apellido, $genero, $telefono, $direccion, $email, $empresa, $telefonoempresa);
     }
     if (isset($_POST["modificar"])) {
-        $nProveedor->modificar($_POST["id"], $_POST["nombre"], $_POST["apellido"], $_POST["genero"], $_POST["telefono"], $_POST["direccion"], $_POST["email"], $_POST["empresa"], $_POST["telefonoempresa"]);
+        $nProveedor->modificar($id, $nombre, $apellido, $genero, $telefono, $direccion, $email, $empresa, $telefonoempresa);
     }
 }
 
@@ -89,13 +98,7 @@ if (!empty($_POST)) {
                                             </div>
                                         </div>
 
-                                        <?php
-                                        if (isset($_POST["cargar"])) {
-                                            $genero = $_POST["genero"];
-                                        } else {
-                                            $genero = "Masculino";
-                                        }
-                                        ?>
+                                       
 
                                          <div class=" form-group row">
                                             <label for="genero" class="col-sm-2 col-form-label">Genero</label>

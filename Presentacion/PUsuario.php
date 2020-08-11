@@ -6,20 +6,29 @@ include_once "../negocio/NRol.php";
 
 $nUsuario = new NUsuario();
 $nRol = new NRol();
-
+$id = isset($_POST["id"]) ? $_POST["id"] : "";
+$nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : "";
+$apellido = isset($_POST["apellido"]) ? $_POST["apellido"] : "";
+$genero = isset($_POST["genero"]) ? $_POST["genero"] : "Masculino";
+$telefono = isset($_POST["telefono"]) ? $_POST["telefono"] : "";
+$direccion = isset($_POST["direccion"]) ? $_POST["direccion"] : "";
+$email = isset($_POST["email"]) ? $_POST["email"] : "";
+$usuario = isset($_POST["usuario"]) ? $_POST["usuario"] : "";
+$password = isset($_POST["password"]) ? $_POST["password"] : "";
+$idrol = isset($_POST["idrol"]) ? $_POST["idrol"] : "";
 if (!empty($_POST)) {
     if (isset($_POST["agregar"])) {
-        $nUsuario->agregar($_POST["nombre"], $_POST["apellido"], $_POST["genero"], $_POST["telefono"], $_POST["direccion"], $_POST["email"], $_POST["usuario"], $_POST["password"], $_POST["idrol"]);
+        $nUsuario->agregar($nombre, $apellido, $genero, $telefono, $direccion, $email, $usuario, $password, $idrol);
     }
     if (isset($_POST["modificar"])) {
-        $nUsuario->modificar($_POST["id"], $_POST["nombre"], $_POST["apellido"], $_POST["genero"], $_POST["telefono"], $_POST["direccion"], $_POST["email"], $_POST["usuario"], $_POST["password"], $_POST["idrol"]);
+        $nUsuario->modificar($id, $nombre, $apellido, $genero, $telefono, $direccion, $email, $usuario, $password, $idrol);
     }
     if (isset($_POST["habilitar"])) {
-        $nUsuario->habilitar($_POST["id"]);
+        $nUsuario->habilitar($id);
     }
 
     if (isset($_POST["deshabilitar"])) {
-        $nUsuario->deshabilitar($_POST["id"]);
+        $nUsuario->deshabilitar($id);
     }
 }
 
@@ -95,14 +104,7 @@ if (!empty($_POST)) {
                                             </div>
                                         </div>
 
-                                        <?php
-                                        if (isset($_POST["cargar"])) {
-                                            $genero = $_POST["genero"];
-                                        } else {
-                                            $genero = "Masculino";
-                                        }
-                                        ?>
-
+                                       
                                          <div class=" form-group row">
                                             <label for="genero" class="col-sm-2 col-form-label">Genero</label>
                                             <div class="col-sm-10">
@@ -172,7 +174,7 @@ if (!empty($_POST)) {
                                                                         $html = $html . ' <option value="' . $reg->id . '"';
 
                                                                         if (isset($_POST["cargar"])) {
-                                                                            if ($_POST["idRol"] == $reg->id) {
+                                                                            if ($idrol == $reg->id) {
                                                                                 $html = $html . 'selected';
                                                                             }
                                                                         }
@@ -283,7 +285,7 @@ if (!empty($_POST)) {
                                                     <input type="hidden" name="apellido" value="' . $reg->apellido . '">
                                                       <input type="hidden" name="telefono" value="' . $reg->telefono . '">
                                                     <input type="hidden" name="genero" value="' . $reg->genero . '">
-                                                    <input type="hidden" name="idRol" value="' . $reg->idRol . '">
+                                                    <input type="hidden" name="idrol" value="' . $reg->idRol . '">
                                                     <input type="hidden" name="direccion" value="' . $reg->direccion . '">
                                                     <input type="hidden" name="email" value="' . $reg->email . '">
                                                     <input type="hidden" name="usuario" value="' . $reg->usuario . '">

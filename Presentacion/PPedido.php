@@ -6,6 +6,14 @@ include_once "../Negocio/NServicio.php";
 $nPedido = new NPedido();
 $nServicio = new NServicio();
 $_SESSION["idusuario"] = 1;
+$id = isset($_POST["id"]) ? $_POST["id"] : "";
+$descripcion = isset($_POST["descripcion"]) ? $_POST["descripcion"] : "";
+$total = isset($_POST["total"]) ? $_POST["total"] : "";
+$email = isset($_POST["email"]) ? $_POST["email"] : "";
+$cantidad = isset($_POST["cantidad"]) ? $_POST["cantidad"] : "";
+$fechafin = isset($_POST["fechafin"]) ? $_POST["fechafin"] : "";
+$idservicio = isset($_POST["idservicio"]) ? $_POST["idservicio"] : "";
+$idusuario = $_SESSION["idusuario"];
 if (!empty($_POST)) {
     $fecha = date("Y") . '-' . date("m") . '-' . date("d");
 
@@ -20,12 +28,8 @@ if (!empty($_POST)) {
             $muestra = round(microtime(true)) . '.' . end($ext);
             // ahora cargar el archivo en el proyecto
             move_uploaded_file($_FILES["muestra"]["tmp_name"], "./assets/img/" . $muestra);
+            $nPedido->agregar($fecha, $descripcion, $muestra, $total, $cantidad, $idusuario, $idservicio, $fechafin);
         }
-
-
-
-
-        $nPedido->agregar($fecha, $_POST["descripcion"], $muestra, $_POST["total"], $_POST["cantidad"], $_SESSION["idusuario"], $_POST["idservicio"], $_POST["fechafin"]);
     }
     if (isset($_POST["modificar"])) {
         //    corregir este if
@@ -41,18 +45,18 @@ if (!empty($_POST)) {
                 move_uploaded_file($_FILES["muestra"]["tmp_name"], "./assets/img/" . $muestra);
             }
         }
-        $nPedido->modificar($_POST["id"], $_POST["descripcion"], $muestra, $_POST["total"], $_POST["cantidad"], $_POST["idservicio"], $_POST["fechafin"]);
+        $nPedido->modificar($id, $descripcion, $muestra, $total, $cantidad, $idservicio, $fechafin);
     }
     if (isset($_POST["habilitar"])) {
-        $nPedido->habilitar($_POST["id"]);
+        $nPedido->habilitar($id);
     }
 
     if (isset($_POST["deshabilitar"])) {
-        $nPedido->deshabilitar($_POST["id"]);
+        $nPedido->deshabilitar($id);
     }
 
     if (isset($_POST["terminar"])) {
-        $nPedido->terminar($_POST["id"]);
+        $nPedido->terminar($id);
     }
 }
 
@@ -170,7 +174,7 @@ if (!empty($_POST)) {
                                                     $html = $html . ' <option value="' . $reg->id . '"';
 
                                                     if (isset($_POST["cargar"])) {
-                                                        if ($_POST["idservicio"] == $reg->id) {
+                                                        if ($idservicio == $reg->id) {
                                                             $html = $html . 'selected';
                                                         }
                                                     }
@@ -313,7 +317,7 @@ d
                                                      <td>
                                                      <form method="POST" action="PDisenio.php">
                                                         <input type="hidden" name="idpedido" value="' . $reg->id . '">
-                                                         <button type="submit" class="btn btn-success" role="button"><i class="fa fa-photo" aria-hidden="true"></i></button>
+                                                         <button type="submit" class="btn btn-success" role="button"><i class="fa fa-image" aria-hidden="true"></i></button>
                                                      <form>
                                                      </td>
                                                   </tr>';
