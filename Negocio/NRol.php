@@ -28,10 +28,4 @@ class NRol
         $this->rol->setDescripcion($descripcion);
         $this->rol->modificar();
     }
-
-    public function eliminar(int $id)
-    {
-        $this->rol->setId($id);
-        $this->rol->eliminar();
-    }
 }

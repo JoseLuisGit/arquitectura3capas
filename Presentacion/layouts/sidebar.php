@@ -35,6 +35,8 @@
                         <a class="nav-link" href="PIngreso.php">Ingreso</a>
                         <a class="nav-link" href="PPedido.php">Pedido</a>
 
+
+
                     </nav>
                 </div>
 

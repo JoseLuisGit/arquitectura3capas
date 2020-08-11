@@ -10,9 +10,6 @@ if (!empty($_POST)) {
     if (isset($_POST["modificar"])) {
         $nRol->modificar($_POST["id"], $_POST["nombre"], $_POST["descripcion"],);
     }
-    if (isset($_POST["eliminar"])) {
-        $nRol->eliminar($_POST["i"]);
-    }
 }
 
 ?>
@@ -140,6 +137,7 @@ if (!empty($_POST)) {
 
 
                                                         $res = $nRol->listar();
+
                                                         $html = '';
 
                                                         while ($reg = $res->fetch_object()) {
@@ -153,7 +151,7 @@ if (!empty($_POST)) {
                                                     <input type="hidden" name="n" id="n" value="' . $reg->nombre . '">
                                                     <input type="hidden" name="d" id="d" value="' . $reg->descripcion . '">
                                                     <button type="submit" value="cargar" name="cargar" id="cargar" class="btn btn-info" role="button"><i class="fa fa-edit" aria-hidden="true"></i></button>
-                                                    <button type="submit" value="eliminar" name="eliminar" id="eliminar" class="btn btn-danger" role="button"><i class="fa fa-eraser" aria-hidden="true"></i></button>
+                                                  
                                                      </form>
                                                   </tr>';
                                                         }

@@ -311,8 +311,8 @@ if (!empty($_POST)) {
                                                      </td>
 d
                                                      <td>
-                                                     <form method="POST" action="PCatalogo.php">
-                                                        <input type="hidden" name="id" value="' . $reg->id . '">
+                                                     <form method="POST" action="PDisenio.php">
+                                                        <input type="hidden" name="idpedido" value="' . $reg->id . '">
                                                          <button type="submit" class="btn btn-success" role="button"><i class="fa fa-photo" aria-hidden="true"></i></button>
                                                      <form>
                                                      </td>

@@ -65,10 +65,4 @@ class DRol
         $sql = "UPDATE rol SET  nombre= '" . $this->getNombre() . "', descripcion='" . $this->getDescripcion() . "' WHERE id='" . $this->getId() . "' ";
         $this->conexion->consulta($sql);
     }
-
-    public function eliminar()
-    {
-        $sql = "DELETE FROM rol WHERE id='" . $this->getId() . "' ";
-        return $this->conexion->consulta($sql);
-    }
 }
