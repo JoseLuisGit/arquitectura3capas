@@ -16,16 +16,23 @@ class Conexion
         }
     }
 
-
-
+    function listado($sql)
+    {
+        return $this->conexion->query($sql);
+    }
     function consulta($sql)
     {
-        $query = $this->conexion->query($sql);
-        return $query;
+        $this->conexion->query($sql);
     }
     function consultaId($sql)
     {
         $query = $this->conexion->query($sql);
         return $this->conexion->insert_id;
+    }
+    function consultaFila($sql)
+    {
+
+        $query = $this->conexion->query($sql);
+        return $query->fetch_assoc();
     }
 }

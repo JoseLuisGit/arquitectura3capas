@@ -17,7 +17,21 @@ $imagen = isset($_POST["imagen"]) ? $_POST["imagen"] : "";
 
 if (!empty($_POST)) {
     if (isset($_POST["agregar"])) {
+        agregar();
+    }
 
+    if (isset($_POST["eliminar"])) {
+        eliminar();
+    }
+
+    function listar()
+    {
+        global $nDisenio, $idpedido;
+        return $nDisenio->listar($idpedido);
+    }
+    function agregar()
+    {
+        global $nDisenio, $idpedido;
         $ext = explode(".", $_FILES["imagen"]["name"]);
         if ($_FILES['imagen']['type'] == "image/jpg" || $_FILES['imagen']['type'] == "image/jpeg" || $_FILES['imagen']['type'] == "image/png") {
             // vamos a renombrar la imagen para evitar que se repitan
@@ -28,7 +42,9 @@ if (!empty($_POST)) {
         }
     }
 
-    if (isset($_POST["eliminar"])) {
+    function eliminar()
+    {
+        global $nDisenio, $id, $imagen;
         if (file_exists('./assets/img/' . $imagen)) {
             unlink('./assets/img/' . $imagen);
         }
@@ -150,7 +166,7 @@ if (!empty($_POST)) {
                                         <?php
 
 
-                                        $res = $nDisenio->listar($idpedido);
+                                        $res = listar();
                                         $html = '';
 
                                         while ($reg = $res->fetch_object()) {

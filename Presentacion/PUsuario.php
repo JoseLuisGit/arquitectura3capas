@@ -18,19 +18,54 @@ $password = isset($_POST["password"]) ? $_POST["password"] : "";
 $idrol = isset($_POST["idrol"]) ? $_POST["idrol"] : "";
 if (!empty($_POST)) {
     if (isset($_POST["agregar"])) {
-        $nUsuario->agregar($nombre, $apellido, $genero, $telefono, $direccion, $email, $usuario, $password, $idrol);
+        agregar();
     }
     if (isset($_POST["modificar"])) {
-        $nUsuario->modificar($id, $nombre, $apellido, $genero, $telefono, $direccion, $email, $usuario, $password, $idrol);
+        modificar();
     }
     if (isset($_POST["habilitar"])) {
-        $nUsuario->habilitar($id);
+        habilitar();
     }
 
     if (isset($_POST["deshabilitar"])) {
-        $nUsuario->deshabilitar($id);
+        deshabilitar();
     }
 }
+
+
+
+function listarRoles()
+{
+    global $nRol;
+    return $nRol->listar();
+}
+
+function listar()
+{
+    global $nUsuario;
+    return $nUsuario->listar();
+}
+function agregar()
+{
+    global $nombre, $apellido, $genero, $telefono, $direccion, $email, $usuario, $password, $idrol, $nUsuario;
+    $nUsuario->agregar($nombre, $apellido, $genero, $telefono, $direccion, $email, $usuario, $password, $idrol);
+}
+function modificar()
+{
+    global $nombre, $apellido, $genero, $telefono, $direccion, $email, $usuario, $password, $idrol, $nUsuario, $id;
+    $nUsuario->modificar($id, $nombre, $apellido, $genero, $telefono, $direccion, $email, $usuario, $password, $idrol);
+}
+function habilitar()
+{
+    global $nUsuario, $id;
+    $nUsuario->habilitar($id);
+}
+function deshabilitar()
+{
+    global $nUsuario, $id;
+    $nUsuario->deshabilitar($id);
+}
+
 
 ?>
 
@@ -168,7 +203,7 @@ if (!empty($_POST)) {
                                                             <div class="col-sm-10">
                                                                 <select name="idrol" class="form-control" id="idrol">
                                                                     <?php
-                                                                    $res = $nRol->listar();
+                                                                    $res = listarRoles();
                                                                     $html = '';
                                                                     while ($reg = $res->fetch_object()) {
                                                                         $html = $html . ' <option value="' . $reg->id . '"';
@@ -257,7 +292,7 @@ if (!empty($_POST)) {
                                         <?php
 
 
-                                        $res = $nUsuario->listar();
+                                        $res = listar();
                                         $html = '';
 
                                         while ($reg = $res->fetch_object()) {

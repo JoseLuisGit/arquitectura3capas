@@ -64,7 +64,7 @@ class DDetalleIngreso
     {
         $sql = "SELECT * FROM detalle_ingreso WHERE idingreso= '" . $this->getIdingreso() . "'";
 
-        return $this->conexion->consulta($sql);
+        return $this->conexion->listado($sql);
     }
 
     public function agregar()

@@ -12,21 +12,55 @@ $capacidad = isset($_POST["capacidad"]) ? $_POST["capacidad"] : "";
 
 if (!empty($_POST)) {
     if (isset($_POST["agregar"])) {
-        $nMaquina->agregar($nombre, $descripcion, $modelo, $capacidad);
+        agregar();
     }
     if (isset($_POST["modificar"])) {
-        $nMaquina->modificar($id, $nombre, $descripcion, $modelo, $capacidad);
+        modificar();
     }
     if (isset($_POST["habilitar"])) {
-        $nMaquina->habilitar($id);
+        habilitar();
     }
 
     if (isset($_POST["deshabilitar"])) {
-        $nMaquina->deshabilitar($id);
+        deshabilitar();
     }
 }
 
+
+
+function agregar()
+{
+    global $nombre, $descripcion, $modelo, $capacidad, $nMaquina;
+    $nMaquina->agregar($nombre, $descripcion, $modelo, $capacidad);
+}
+
+function modificar()
+{
+    global $nombre, $descripcion, $modelo, $capacidad, $nMaquina, $id;
+    $nMaquina->modificar($id, $nombre, $descripcion, $modelo, $capacidad);
+}
+
+function listar()
+{
+    global $nMaquina;
+    return $nMaquina->listar();
+}
+
+function habilitar()
+{
+    global $id, $nMaquina;
+    $nMaquina->habilitar($id);
+}
+function deshabilitar()
+{
+    global $id, $nMaquina;
+    $nMaquina->deshabilitar($id);
+}
+
+
 ?>
+
+
 
 
 
@@ -174,7 +208,7 @@ if (!empty($_POST)) {
                                         <?php
 
 
-                                        $res = $nMaquina->listar();
+                                        $res = listar();
                                         $html = '';
 
                                         while ($reg = $res->fetch_object()) {

@@ -9,7 +9,6 @@ $_SESSION["idusuario"] = 1;
 $id = isset($_POST["id"]) ? $_POST["id"] : "";
 $descripcion = isset($_POST["descripcion"]) ? $_POST["descripcion"] : "";
 $total = isset($_POST["total"]) ? $_POST["total"] : "";
-$email = isset($_POST["email"]) ? $_POST["email"] : "";
 $cantidad = isset($_POST["cantidad"]) ? $_POST["cantidad"] : "";
 $fechafin = isset($_POST["fechafin"]) ? $_POST["fechafin"] : "";
 $idservicio = isset($_POST["idservicio"]) ? $_POST["idservicio"] : "";
@@ -19,8 +18,45 @@ if (!empty($_POST)) {
 
 
     if (isset($_POST["agregar"])) {
+        agregar();
+    }
+    if (isset($_POST["modificar"])) {
+        modificar();
+    }
+    if (isset($_POST["habilitar"])) {
+        habilitar();
+    }
+
+    if (isset($_POST["deshabilitar"])) {
+        deshabilitar();
+    }
+
+    if (isset($_POST["terminar"])) {
+        terminar();
+    }
+}
 
 
+function agregar()
+{
+    global $nPedido, $fecha, $descripcion, $total, $cantidad, $idusuario, $idservicio, $fechafin;
+    // sacamos la extension del archivo
+    $ext = explode(".", $_FILES["muestra"]["name"]);
+    if ($_FILES['muestra']['type'] == "image/jpg" || $_FILES['muestra']['type'] == "image/jpeg" || $_FILES['muestra']['type'] == "image/png") {
+        // vamos a renombrar la imagen para evitar que se repitan
+        $muestra = round(microtime(true)) . '.' . end($ext);
+        // ahora cargar el archivo en el proyecto
+        move_uploaded_file($_FILES["muestra"]["tmp_name"], "./assets/img/" . $muestra);
+        $nPedido->agregar($fecha, $descripcion, $muestra, $total, $cantidad, $idusuario, $idservicio, $fechafin);
+    }
+}
+function modificar()
+{
+    global $nPedido, $fecha, $descripcion, $total, $cantidad, $idusuario, $idservicio, $fechafin, $id;
+    //    corregir este if
+    if ($_POST["muestraactual"] != "") {
+        $muestra = $_POST["muestraactual"];
+    } else {
         // sacamos la extension del archivo
         $ext = explode(".", $_FILES["muestra"]["name"]);
         if ($_FILES['muestra']['type'] == "image/jpg" || $_FILES['muestra']['type'] == "image/jpeg" || $_FILES['muestra']['type'] == "image/png") {
@@ -28,37 +64,35 @@ if (!empty($_POST)) {
             $muestra = round(microtime(true)) . '.' . end($ext);
             // ahora cargar el archivo en el proyecto
             move_uploaded_file($_FILES["muestra"]["tmp_name"], "./assets/img/" . $muestra);
-            $nPedido->agregar($fecha, $descripcion, $muestra, $total, $cantidad, $idusuario, $idservicio, $fechafin);
         }
     }
-    if (isset($_POST["modificar"])) {
-        //    corregir este if
-        if ($_POST["muestraactual"] != "") {
-            $muestra = $_POST["muestraactual"];
-        } else {
-            // sacamos la extension del archivo
-            $ext = explode(".", $_FILES["muestra"]["name"]);
-            if ($_FILES['muestra']['type'] == "image/jpg" || $_FILES['muestra']['type'] == "image/jpeg" || $_FILES['muestra']['type'] == "image/png") {
-                // vamos a renombrar la imagen para evitar que se repitan
-                $muestra = round(microtime(true)) . '.' . end($ext);
-                // ahora cargar el archivo en el proyecto
-                move_uploaded_file($_FILES["muestra"]["tmp_name"], "./assets/img/" . $muestra);
-            }
-        }
-        $nPedido->modificar($id, $descripcion, $muestra, $total, $cantidad, $idservicio, $fechafin);
-    }
-    if (isset($_POST["habilitar"])) {
-        $nPedido->habilitar($id);
-    }
-
-    if (isset($_POST["deshabilitar"])) {
-        $nPedido->deshabilitar($id);
-    }
-
-    if (isset($_POST["terminar"])) {
-        $nPedido->terminar($id);
-    }
+    $nPedido->modificar($id, $descripcion, $muestra, $total, $cantidad, $idservicio, $fechafin);
 }
+
+function habilitar()
+{
+    global $nPedido, $id;
+    $nPedido->habilitar($id);
+}
+
+function deshabilitar()
+{
+    global $nPedido, $id;
+    $nPedido->deshabilitar($id);
+}
+
+function terminar()
+{
+    global $nPedido, $id;
+    $nPedido->terminar($id);
+}
+
+function listarServicios()
+{
+    global $nServicio;
+    return $nServicio->listar();
+}
+
 
 ?>
 
@@ -168,7 +202,7 @@ if (!empty($_POST)) {
                                         <div class="col-sm-10">
                                             <select name="idservicio" class="form-control" id="idservicio">
                                                 <?php
-                                                $res = $nServicio->listar();
+                                                $res = listarServicios();
                                                 $html = '';
                                                 while ($reg = $res->fetch_object()) {
                                                     $html = $html . ' <option value="' . $reg->id . '"';
@@ -259,7 +293,7 @@ if (!empty($_POST)) {
                                 <?php
 
 
-                                $res = $nPedido->listar();
+                                $res = listar();
                                 $html = '';
 
                                 while ($reg = $res->fetch_object()) {

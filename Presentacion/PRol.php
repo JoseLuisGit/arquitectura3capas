@@ -10,11 +10,29 @@ $descripcion = isset($_POST["descripcion"]) ? $_POST["descripcion"] : "";
 
 if (!empty($_POST)) {
     if (isset($_POST["agregar"])) {
-        $nRol->agregar($nombre, $descripcion);
+        agregar();
     }
+
     if (isset($_POST["modificar"])) {
-        $nRol->modificar($id, $nombre, $descripcion,);
+        modificar();
     }
+}
+
+
+function agregar()
+{
+    global $nRol, $nombre, $descripcion;
+    $nRol->agregar($nombre, $descripcion);
+}
+function modificar()
+{
+    global $nRol, $nombre, $descripcion, $id;
+    $nRol->modificar($id, $nombre, $descripcion);
+}
+function listar()
+{
+    global $nRol;
+    return $nRol->listar();
 }
 
 ?>
@@ -141,7 +159,7 @@ if (!empty($_POST)) {
                                                         <?php
 
 
-                                                        $res = $nRol->listar();
+                                                        $res = listar();
 
                                                         $html = '';
 

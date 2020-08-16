@@ -30,10 +30,10 @@ class NIngreso
     private function agregarDetalle($detalle)
     {
         foreach ($detalle as $res) {
-            $this->detalle_ingreso->setCantidad($res->cantidad);
-            $this->detalle_ingreso->setCosto($res->costo);
+            $this->detalle_ingreso->setCantidad($res["cantidad"]);
+            $this->detalle_ingreso->setCosto($res["costo"]);
             $this->detalle_ingreso->setIdingreso($this->ingreso->getId());
-            $this->detalle_ingreso->setIdrecurso($res->id);
+            $this->detalle_ingreso->setIdrecurso($res["id"]);
             $this->detalle_ingreso->agregar();
         }
     }

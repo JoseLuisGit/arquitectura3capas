@@ -71,7 +71,7 @@ class DRecurso
     {
         $sql = "SELECT * FROM recurso";
 
-        return $this->conexion->consulta($sql);
+        return $this->conexion->listado($sql);
     }
 
     public function agregar()
@@ -86,5 +86,13 @@ class DRecurso
     {
         $sql = "UPDATE recurso SET  nombre= '" . $this->getNombre() . "', descripcion='" . $this->getDescripcion() .  "', medida='" . $this->getMedida() . "' , cantidad='" . $this->getCantidad() . "' WHERE id='" . $this->getId() . "' ";
         $this->conexion->consulta($sql);
+    }
+
+    public function obtener()
+    {
+
+        $sql = "SELECT * FROM recurso WHERE id= '" . $this->getId() . "'";
+
+        return $this->conexion->consultaFila($sql);
     }
 }

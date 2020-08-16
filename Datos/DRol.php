@@ -49,7 +49,7 @@ class DRol
     {
         $sql = "SELECT * FROM rol";
 
-        return $this->conexion->consulta($sql);
+        return $this->conexion->listado($sql);
     }
 
     public function agregar()

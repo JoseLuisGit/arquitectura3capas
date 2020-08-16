@@ -66,15 +66,10 @@ class DIngreso
     {
         $sql = "SELECT * FROM ingreso";
 
-        return $this->conexion->consulta($sql);
+        return $this->conexion->listado($sql);
     }
 
-    public function listardetalle($id)
-    {
-        $sql = "SELECT * FROM detalle_ingreso INNER JOIN ingreso ON detalle_ingreso.idingreso = ingreso.id WHERE idingreso= $id";
 
-        return $this->conexion->consulta($sql);
-    }
 
     public function agregar()
     {

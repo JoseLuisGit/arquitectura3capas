@@ -72,7 +72,7 @@ class DUsuario
     {
         $sql = "SELECT * FROM persona INNER JOIN usuario ON persona.id=usuario.id;";
 
-        return $this->conexion->consulta($sql);
+        return $this->conexion->listado($sql);
     }
 
     public function agregar()

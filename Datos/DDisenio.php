@@ -42,7 +42,7 @@ class DDisenio
     public function listar()
     {
         $sql = "SELECT * FROM disenio WHERE idpedido = '" . $this->getIdpedido() . "'";
-        return $this->conexion->consulta($sql);
+        return $this->conexion->listado($sql);
     }
     public function agregar()
     {

@@ -8,13 +8,30 @@ $nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : "";
 $descripcion = isset($_POST["descripcion"]) ? $_POST["descripcion"] : "";
 if (!empty($_POST)) {
     if (isset($_POST["agregar"])) {
-        $nServicio->agregar($nombre, $descripcion);
+        agregar();
     }
     if (isset($_POST["modificar"])) {
-        $nServicio->modificar($id, $nombre, $descripcion);
+        modificar();
     }
 }
 
+function agregar()
+{
+    global $nServicio, $nombre, $descripcion;
+    $nServicio->agregar($nombre, $descripcion);
+}
+
+function modificar()
+{
+    global $nServicio, $nombre, $descripcion, $id;
+    $nServicio->modificar($id, $nombre, $descripcion);
+}
+
+function listar()
+{
+    global $nServicio;
+    return $nServicio->listar();
+}
 ?>
 
 
@@ -139,7 +156,7 @@ if (!empty($_POST)) {
                                                         <?php
 
 
-                                                        $res = $nServicio->listar();
+                                                        $res = listar();
                                                         $html = '';
 
                                                         while ($reg = $res->fetch_object()) {

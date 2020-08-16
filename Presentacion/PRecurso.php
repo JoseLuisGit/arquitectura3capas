@@ -11,13 +11,29 @@ $medida = isset($_POST["medida"]) ? $_POST["medida"] : "";
 $cantidad = isset($_POST["cantidad"]) ? $_POST["cantidad"] : "";
 if (!empty($_POST)) {
     if (isset($_POST["agregar"])) {
-        $nRecurso->agregar($nombre, $descripcion, $medida, $cantidad);
+        agregar();
     }
     if (isset($_POST["modificar"])) {
-        $nRecurso->modificar($id, $nombre, $descripcion, $medida, $cantidad);
+        modificar();
     }
 }
 
+function agregar()
+{
+    global $nRecurso, $nombre, $descripcion, $medida, $cantidad;
+    $nRecurso->agregar($nombre, $descripcion, $medida, $cantidad);
+}
+
+function modificar()
+{
+    global $nRecurso, $nombre, $descripcion, $medida, $cantidad, $id;
+    $nRecurso->modificar($id, $nombre, $descripcion, $medida, $cantidad);
+}
+function listar()
+{
+    global $nRecurso;
+    return $nRecurso->listar();
+}
 ?>
 
 
@@ -172,7 +188,7 @@ if (!empty($_POST)) {
                                         <?php
 
 
-                                        $res = $nRecurso->listar();
+                                        $res = listar();
                                         $html = '';
 
                                         while ($reg = $res->fetch_object()) {

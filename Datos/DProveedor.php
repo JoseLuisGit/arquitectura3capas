@@ -62,7 +62,7 @@ class DProveedor
      ON persona.id=proveedor
     .id;";
 
-        return $this->conexion->consulta($sql);
+        return $this->conexion->listado($sql);
     }
 
     public function agregar()

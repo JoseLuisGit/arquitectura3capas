@@ -46,7 +46,7 @@ class DTecnico
     {
         $sql = "SELECT * FROM persona INNER JOIN tecnico ON persona.id=tecnico.id;";
 
-        return $this->conexion->consulta($sql);
+        return $this->conexion->listado($sql);
     }
 
     public function agregar()

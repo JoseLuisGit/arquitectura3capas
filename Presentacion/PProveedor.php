@@ -17,14 +17,29 @@ $empresa = isset($_POST["empresa"]) ? $_POST["empresa"] : "";
 $telefonoempresa = isset($_POST["telefonoempresa"]) ? $_POST["telefonoempresa"] : "";
 if (!empty($_POST)) {
     if (isset($_POST["agregar"])) {
-        $nProveedor->agregar($nombre, $apellido, $genero, $telefono, $direccion, $email, $empresa, $telefonoempresa);
+        agregar();
     }
     if (isset($_POST["modificar"])) {
-        $nProveedor->modificar($id, $nombre, $apellido, $genero, $telefono, $direccion, $email, $empresa, $telefonoempresa);
+        modificar();
     }
 }
 
 
+function agregar()
+{
+    global $nombre, $apellido, $genero, $telefono, $direccion, $email, $empresa, $telefonoempresa, $nProveedor;
+    $nProveedor->agregar($nombre, $apellido, $genero, $telefono, $direccion, $email, $empresa, $telefonoempresa);
+}
+function modificar()
+{
+    global $nombre, $apellido, $genero, $telefono, $direccion, $email, $empresa, $telefonoempresa, $nProveedor, $id;
+    $nProveedor->modificar($id, $nombre, $apellido, $genero, $telefono, $direccion, $email, $empresa, $telefonoempresa);
+}
+function listar()
+{
+    global $nProveedor;
+    return $nProveedor->listar();
+}
 
 ?>
 
@@ -220,7 +235,7 @@ if (!empty($_POST)) {
                                                                         <?php
 
 
-                                                                        $res = $nProveedor->listar();
+                                                                        $res = listar();
                                                                         $html = '';
 
                                                                         while ($reg = $res->fetch_object()) {

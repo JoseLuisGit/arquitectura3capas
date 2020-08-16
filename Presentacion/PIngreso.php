@@ -9,9 +9,6 @@ $nIngreso = new NIngreso();
 $nProveedor = new NProveedor();
 $nRecurso = new NRecurso();
 
-$recursos = $nRecurso->listar();
-
-
 
 $detalle = array();
 
@@ -23,38 +20,64 @@ $idrecurso = isset($_POST["idrecurso"]) ? $_POST["idrecurso"] : "";
 
 
 
+
 if (!empty($_POST)) {
     if (isset($_POST["agregar"])) {
-        $nIngreso->agregar($fecha, $idproveedor, $total, $_SESSION["detalle"]);
+        agregar();
         $_SESSION["detalle"] = [];
     }
-    if (isset($_POST["agregardetalle"])) {
 
-        if ($idrecurso != "") {
-            $b = false;
-            while ($det = $recursos->fetch_object()) {
-                if ($det->id == $_POST["idrecurso"]) {
-                    $_SESSION["detalle"][] = $det;
-                    $b = true;
-                }
-            }
-            if ($b) {
-                $detalle = $_SESSION["detalle"];
-                $detalle[count($detalle) - 1]->cantidad = $_POST["cantidad"];
-                $detalle[count($detalle) - 1]->costo = $_POST["costo"];
-            }
-        } else {
-            if (isset($_SESSION["detalle"]))
-                $detalle = $_SESSION["detalle"];
-        }
+    if (isset($_POST["listardetalle"])) {
+        $listadodetalle = listarDetalle();
+    }
+    if (isset($_POST["agregardetalle"])) {
+        agregarDetalle();
     }
     if (isset($_POST["limpiar"])) {
         $_SESSION["detalle"] = [];
     }
+    if (isset($_SESSION["detalle"]))
+        $detalle = $_SESSION["detalle"];
+}
+
+function agregar()
+{
+    global $nIngreso, $fecha, $idproveedor, $total;
+    $nIngreso->agregar($fecha, $idproveedor, $total, $_SESSION["detalle"]);
+}
+
+function listarDetalle()
+{
+    global $nIngreso, $id;
+    return $nIngreso->listardetalle($id);
+}
+
+function listar()
+{
+    global $nIngreso;
+    return $nIngreso->listar();
+}
+function listarProveedores()
+{
+    global $nProveedor;
+    return $nProveedor->listar();
 }
 
 
+function agregarDetalle()
+{
+    global $idrecurso, $nRecurso, $detalle;
+    if ($idrecurso != null) {
+        $rec = $nRecurso->obtener($idrecurso);
+        if ($rec != null) {
 
+            $rec["cantidad"] = $_POST["cantidad"];
+            $rec["costo"] = $_POST["costo"];
+            $_SESSION["detalle"][] = $rec;
+        }
+        $detalle = $_SESSION["detalle"];
+    }
+}
 
 
 
@@ -126,18 +149,24 @@ if (!empty($_POST)) {
                                         <div class="col-sm-10">
                                             <select name="idproveedor" class="form-control" id="idproveedor">
                                                 <?php
-                                                $res = $nProveedor->listar();
-                                                $html = '';
-                                                while ($reg = $res->fetch_object()) {
-                                                    $html = $html . ' <option value="' . $reg->id . '"';
 
-                                                    if (isset($_POST["agregardetalle"])) {
-                                                        if ($idproveedor == $reg->id) {
-                                                            $html = $html . 'selected';
+                                                if (isset($_POST["agregar"]) || isset($_POST["listardetalle"]) || isset($_POST["agregardetalle"])) {
+                                                    $html = $_SESSION["proveedores"];
+                                                } else {
+                                                    $res = listarProveedores();
+                                                    $html = '';
+                                                    while ($reg = $res->fetch_object()) {
+                                                        $html = $html . ' <option value="' . $reg->id . '"';
+
+                                                        if (isset($_POST["agregardetalle"])) {
+                                                            if ($idproveedor == $reg->id) {
+                                                                $html = $html . 'selected';
+                                                            }
                                                         }
-                                                    }
 
-                                                    $html = $html . ' >' . $reg->nombre . ' ' . $reg->apellido . '</option>';
+                                                        $html = $html . ' >' . $reg->nombre . ' ' . $reg->apellido . '</option>';
+                                                    }
+                                                    $_SESSION["proveedores"] = $html;
                                                 }
                                                 echo $html;
                                                 ?>
@@ -189,15 +218,15 @@ if (!empty($_POST)) {
                                         <?php
                                         $total = 0;
                                         foreach ($detalle as $det) {
-                                            echo '<tr><td>' . $det->id . '</td>
-                                            <td>' . $det->nombre . '</td>
-                                            <td>' . $det->descripcion . '</td>
-                                            <td>' . $det->cantidad . '</td>
-                                            <td>' . $det->costo . '</td>
-                                            <td>' . $det->costo * $det->cantidad . '</td>
+                                            echo '<tr><td>' . $det["id"] . '</td>
+                                            <td>' . $det["nombre"] . '</td>
+                                            <td>' . $det["descripcion"] . '</td>
+                                            <td>' . $det["cantidad"] . '</td>
+                                            <td>' . $det["costo"] . '</td>
+                                            <td>' . $det["costo"] * $det["cantidad"] . '</td>
                                             </tr>
                                             ';
-                                            $total = $total + $det->costo * $det->cantidad;
+                                            $total = $total + $det["costo"] * $det["cantidad"];
                                         }
                                         ?>
 
@@ -251,12 +280,14 @@ if (!empty($_POST)) {
 
                                         <?php
 
+                                        if (isset($_POST["listardetalle"]) || isset($_POST["agregardetalle"])) {
+                                            $html = $_SESSION["ingresos"];
+                                        } else {
+                                            $res = listar();
+                                            $html = '';
 
-                                        $res = $nIngreso->listar();
-                                        $html = '';
-
-                                        while ($reg = $res->fetch_object()) {
-                                            $html = $html . '
+                                            while ($reg = $res->fetch_object()) {
+                                                $html = $html . '
                                             <tr >
                                                  <td>' . $reg->id . '</td>
                                                <td>' . $reg->fecha . '</td>
@@ -264,7 +295,7 @@ if (!empty($_POST)) {
                                                <td>' . $reg->idProveedor . '</td>
                                               ';
 
-                                            $html = $html . '</td>
+                                                $html = $html . '</td>
                                                <td class="row"> 
                                                <form  method="POST">
                                                    <input type="hidden" name="id" value="' . $reg->id . '">
@@ -274,6 +305,8 @@ if (!empty($_POST)) {
                                                     <button type="submit" value="listardetalle" name="listardetalle"  class="btn btn-info" role="button"><i class="fa fa-eye" aria-hidden="true"></i></button>
                                                      </form>
                                                   </tr>';
+                                            }
+                                            $_SESSION["ingresos"] = $html;
                                         }
                                         echo $html;
                                         ?>
@@ -289,7 +322,7 @@ if (!empty($_POST)) {
 
                         if (isset($_POST["listardetalle"])) {
 
-                            $listadodetalle = $nIngreso->listardetalle($id);
+
                             $html = ' <div class=" card-body">
                             <div class="table-responsive">
                                 <h3>Detalle Ingreso</h3>

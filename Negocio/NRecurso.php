@@ -32,4 +32,10 @@ class NRecurso
         $this->recurso->setCantidad($cantidad);
         $this->recurso->modificar();
     }
+
+    public function obtener(int $idrecurso)
+    {
+        $this->recurso->setId($idrecurso);
+        return  $this->recurso->obtener();
+    }
 }

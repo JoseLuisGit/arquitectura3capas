@@ -130,7 +130,7 @@ class DPedido
     {
         $sql = "SELECT * FROM pedido";
 
-        return $this->conexion->consulta($sql);
+        return $this->conexion->listado($sql);
     }
 
     public function agregar()
