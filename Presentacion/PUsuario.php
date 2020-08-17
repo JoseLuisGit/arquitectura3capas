@@ -1,6 +1,11 @@
 <?php
 
 session_start();
+
+if($_SESSION["rol_usuario"]!=1){
+  header("Location: PLogin.php");
+}
+
 include_once "../negocio/NUsuario.php";
 include_once "../negocio/NRol.php";
 
@@ -305,7 +310,7 @@ function deshabilitar()
                                               <td>' . $reg->direccion . '</td>
                                               <td>' . $reg->email . '</td>
                                               <td>' . $reg->usuario . '</td>
-                                               <td>' . $reg->idRol . '</td>
+                                               <td>' . $reg->idrol . '</td>
                                               <td>';
                                             if ($reg->estado == 1) {
                                                 $html = $html . '<span class="badge badge-success">Activado</span>';
@@ -320,7 +325,7 @@ function deshabilitar()
                                                     <input type="hidden" name="apellido" value="' . $reg->apellido . '">
                                                       <input type="hidden" name="telefono" value="' . $reg->telefono . '">
                                                     <input type="hidden" name="genero" value="' . $reg->genero . '">
-                                                    <input type="hidden" name="idrol" value="' . $reg->idRol . '">
+                                                    <input type="hidden" name="idrol" value="' . $reg->idrol . '">
                                                     <input type="hidden" name="direccion" value="' . $reg->direccion . '">
                                                     <input type="hidden" name="email" value="' . $reg->email . '">
                                                     <input type="hidden" name="usuario" value="' . $reg->usuario . '">

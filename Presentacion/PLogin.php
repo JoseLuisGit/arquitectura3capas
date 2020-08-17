@@ -23,7 +23,7 @@ function login(){
     $_SESSION["nombre_usuario"] = $usuario["usuario"];
     $_SESSION["rol_usuario"] = $usuario["idrol"];
     $_SESSION["id_usuario"]=$usuario["id"];
-    header("Location: PRol.php");
+    header("Location: PHome.php");
     
  }else{
      echo 'Datos Incorrectos';

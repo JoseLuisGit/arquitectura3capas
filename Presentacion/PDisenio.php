@@ -2,6 +2,8 @@
 session_start();
 include_once "../Negocio/NDisenio.php";
 
+
+
 $nDisenio = new NDisenio();
 
 if (isset($_POST["idpedido"])) {
@@ -132,11 +134,14 @@ if (!empty($_POST)) {
 
                                     <div class=" form-group row ">
 
-
-                                        <div class=" col-sm-6">
+                                      <?php
+                                      if($_SESSION["rol_usuario"]==1){
+                                      echo ' <div class=" col-sm-6">
                                             <button type="submit" name="agregar" id="agregar" class="btn btn-primary">Agregar</button>
                                             <a href="PPedido.php" class="btn btn-primary">Atras</a>
-                                        </div>
+                                        </div>';}
+                                      ?>
+                                       
                                     </div>
 
                                 </form>
@@ -175,15 +180,21 @@ if (!empty($_POST)) {
                                                <td>' . $reg->id . '</td>
                                               <td>  <img src="./assets/img/' . $reg->imagen . '" height="400px"> </td>
 
-                                               <td class="row"> 
-                                               <form  method="POST">
+                                               <td class="row"> ';
+
+                                                  if($_SESSION["rol_usuario"]==1){
+
+                                                  $html = $html.'<form  method="POST">
                                                    <input type="hidden" name="id" id="id" value="' . $reg->id . '">
                                                    <input type="hidden" name="idpedido" id="idpedido" value="' . $reg->idpedido . '">
                                                    <input type="hidden" name="imagen" id="imagen" value="' . $reg->imagen . '">
 
 
                                                     <button type="submit" value="eliminar" name="eliminar" id="eliminar" class="btn btn-danger" role="button"><i class="fa fa-eraser" aria-hidden="true"></i></button>
-                                                     </form>
+                                                     </form>';
+                                                  }
+                                               
+                                                     $html=$html.'
                                                   </tr>';
                                         }
                                         echo $html

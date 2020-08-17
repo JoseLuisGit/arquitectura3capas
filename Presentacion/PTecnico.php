@@ -1,6 +1,11 @@
 <?php
 
 session_start();
+
+if($_SESSION["rol_usuario"]!=1){
+  header("Location: PHome.php");
+}
+
 include_once "../negocio/NTecnico.php";
 include_once "../negocio/NRol.php";
 

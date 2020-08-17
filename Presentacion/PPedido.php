@@ -13,6 +13,7 @@ $cantidad = isset($_POST["cantidad"]) ? $_POST["cantidad"] : "";
 $fechafin = isset($_POST["fechafin"]) ? $_POST["fechafin"] : "";
 $idservicio = isset($_POST["idservicio"]) ? $_POST["idservicio"] : "";
 $idusuario = $_SESSION["id_usuario"];
+$idrol = $_SESSION["rol_usuario"];
 if (!empty($_POST)) {
     $fecha = date("Y") . '-' . date("m") . '-' . date("d");
 
@@ -234,7 +235,9 @@ function listarServicios()
 
                                     <div class=" form-group row ">
 
+                                 
                                         <?php
+                                        if($idrol==2){
                                         if (isset($_POST['cargar'])) {
                                             echo '
                                             <div class=" col-sm-6">
@@ -249,6 +252,7 @@ function listarServicios()
                                             <button type="submit" name="agregar" id="agregar" class="btn btn-primary">Agregar</button>
                                            </div> ';
                                         }
+                                    }
 
                                         ?>
                                     </div>
@@ -334,17 +338,18 @@ function listarServicios()
                                                      <input type="hidden" name="cantidad" value="' . $reg->cantidad . '">
                                                        <input type="hidden" name="idservicio" value="' . $reg->idservicio . '">
                                                           <input type="hidden" name="fechafin" value="' . $reg->fechafin . '">';
-                                    if ($reg->terminado == 0) {
+                                    if ($reg->terminado == 0 && $idrol==2) {
                                         $html = $html . '
                                                     <button type="submit" value="cargar" name="cargar"  class="btn btn-info" role="button"><i class="fa fa-edit" aria-hidden="true"></i></button>
                                                  ';
                                     }
-                                    if ($reg->estado == 1) {
+                                    if ($reg->estado == 1 && $idrol==2) {
                                         $html = $html . '  <button type="submit" value="deshabilitar" name="deshabilitar"  class="btn btn-danger" role="button"><i class="fa fa-minus" aria-hidden="true"></i></button>';
-                                    } else {
+                                    } elseif($reg->estado == 0 && $idrol==2) {
+
                                         $html = $html . '  <button type="submit" value="habilitar" name="habilitar"  class="btn btn-success" role="button"><i class="fa fa-check" aria-hidden="true"></i></button>';
                                     }
-                                    if ($reg->terminado == 0) {
+                                    if ($reg->terminado == 0 && $idrol == 1) {
                                         $html = $html . '  <button type="submit" value="terminar" name="terminar"  class="btn btn-warning" role="button"><i class="fa fa-exclamation-circle" aria-hidden="true"></i></button>';
                                     }
 

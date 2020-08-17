@@ -1,8 +1,14 @@
 <?php
 
 session_start();
+
+if($_SESSION["rol_usuario"]!=1){
+  header("Location: PHome.php");
+}
+
 include_once "../negocio/NMaquina.php";
 $nMaquina = new NMaquina();
+
 
 $id = isset($_POST["id"]) ? $_POST["id"] : "";
 $nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : "";
