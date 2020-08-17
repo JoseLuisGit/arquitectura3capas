@@ -1,6 +1,6 @@
 <?php
 
-
+session_start();
 include_once "../negocio/NRecurso.php";
 $nRecurso = new NRecurso();
 

@@ -48,7 +48,7 @@
         </div>
         <div class="sb-sidenav-footer">
             <div class="small">Logueado como:</div>
-            Jose
+            <?php echo $_SESSION["nombre_usuario"]; ?>
         </div>
     </nav>
 </div>

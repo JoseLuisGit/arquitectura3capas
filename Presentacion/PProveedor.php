@@ -1,6 +1,6 @@
 <?php
 
-
+session_start();
 include_once "../negocio/NProveedor.php";
 include_once "../negocio/NRol.php";
 

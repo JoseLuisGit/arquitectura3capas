@@ -80,4 +80,10 @@ class NUsuario
         $this->usuario->setId($id);
         $this->usuario->habilitar();
     }
+
+    public function login ($usuario, $password){
+      $this->usuario->setUsuario($usuario);
+      $this->usuario->setPassword($password);
+     return $this->usuario->login();
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
-
+session_start();
 include_once "../negocio/NRol.php";
 $nRol = new NRol();
 

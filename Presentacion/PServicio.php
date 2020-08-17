@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 
 include_once "../negocio/NServicio.php";
 $nServicio = new NServicio();

@@ -5,14 +5,14 @@ include_once "../negocio/NPedido.php";
 include_once "../Negocio/NServicio.php";
 $nPedido = new NPedido();
 $nServicio = new NServicio();
-$_SESSION["idusuario"] = 1;
+
 $id = isset($_POST["id"]) ? $_POST["id"] : "";
 $descripcion = isset($_POST["descripcion"]) ? $_POST["descripcion"] : "";
 $total = isset($_POST["total"]) ? $_POST["total"] : "";
 $cantidad = isset($_POST["cantidad"]) ? $_POST["cantidad"] : "";
 $fechafin = isset($_POST["fechafin"]) ? $_POST["fechafin"] : "";
 $idservicio = isset($_POST["idservicio"]) ? $_POST["idservicio"] : "";
-$idusuario = $_SESSION["idusuario"];
+$idusuario = $_SESSION["id_usuario"];
 if (!empty($_POST)) {
     $fecha = date("Y") . '-' . date("m") . '-' . date("d");
 
@@ -85,6 +85,11 @@ function terminar()
 {
     global $nPedido, $id;
     $nPedido->terminar($id);
+}
+
+function listar(){
+    global $nPedido;
+    return $nPedido->listar();
 }
 
 function listarServicios()

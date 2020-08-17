@@ -100,4 +100,9 @@ class DUsuario
         $sql = "UPDATE usuario SET estado = 0 WHERE id='" . $this->getId() . "'";
         $this->conexion->consulta($sql);
     }
+
+    public function login(){
+        $sql = "SELECT * FROM usuario WHERE usuario='".$this->getUsuario()."' AND password= '".$this->getPassword()."';";
+        return $this->conexion->consultaFila($sql);
+    }
 }
