@@ -20,23 +20,55 @@
                     </nav>
                 </div>
 
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseB" aria-expanded="false" aria-controls="collapseLayouts">
+
+
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseI" aria-expanded="false" aria-controls="collapseLayouts">
                     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                    Boceto
+                    Inventario
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapseB" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+
+                <div class="collapse" id="collapseI" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link" href="PRecurso.php">Recurso</a>
-                        <a class="nav-link" href="PServicio.php">Servicio</a>
                         <a class="nav-link" href="PMaquina.php">Maquina</a>
-                        <a class="nav-link" href="PTecnico.php">Tecnico</a>
-                        <a class="nav-link" href="PProveedor.php">Proveedor</a>
                         <a class="nav-link" href="PIngreso.php">Ingreso</a>
+                        <a class="nav-link" href="PProveedor.php">Proveedor</a>
+
+
+                    </nav>
+                </div>
+
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#landa" aria-expanded="false" aria-controls="collapseLayouts">
+                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                    Conservacion
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+
+                <div class="collapse" id="landa" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+
+                        <a class="nav-link" href="PTecnico.php">Tecnico</a>
+                        <a class="nav-link" href="PMantenimiento.php">Mantenimiento</a>
+
+
+
+                    </nav>
+                </div>
+
+
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#ylanda" aria-expanded="false" aria-controls="collapseLayouts">
+                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                    Utilidad
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+
+                <div class="collapse" id="ylanda" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+
                         <a class="nav-link" href="PPedido.php">Pedido</a>
 
-
-
+                        <a class="nav-link" href="PServicio.php">Servicio</a>
                     </nav>
                 </div>
 
